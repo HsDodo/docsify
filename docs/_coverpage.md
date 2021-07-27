@@ -4,7 +4,7 @@
 
 # 笔记本
 
-[GitHub](https://github.com/Hanxueqing/Douban-Movie.git)
+[GitHub]([HsDodo/docsify (github.com)](https://github.com/HsDodo/docsify))
 [Blog](https://lhongsen.top/)
 [Read](README.md)
 

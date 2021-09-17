@@ -4,7 +4,7 @@
 
 # 笔记本
 
-[GitHub]([HsDodo/docsify (github.com)](https://github.com/HsDodo/docsify))
+[GitHub](https://github.com/HsDodo/docsify)
 [Blog](https://lhongsen.top/)
 [Read](README.md)
 

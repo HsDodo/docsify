@@ -34,7 +34,13 @@ __分类__
 
 ## 💥第四章 串
 
- <font size=4em color='#9ed048'>KMP:</font> 关于Next数组的手动模拟，为最长匹配前后缀长度+1  （看下例题就行），要区分next[] 与 nextval[]  (P112-7) 
+ <font size=4em color='#9ed048'>KMP:</font> 
+
+__算Next[] __和 __Nextval[]__
+
+Next[] : 注意数组下标是-1开始还是0开始，先看选项
+
+Nextval[]: 计算时先算Next[] 再推，推法：若P j = P next[j] 的话进行修正[^王道书112 T7] 做遍题就能回忆
 
 
 
@@ -71,8 +77,6 @@ __分类__
  <font size=4em color='#c189'>二叉排序树:</font>
 
 ​		①做题的时候注意别和 平衡二叉搜索树 弄混
-
-​		
 
  <font size=4em color='#c189'>二叉平衡树:</font>
 

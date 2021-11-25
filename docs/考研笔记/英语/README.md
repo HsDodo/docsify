@@ -169,7 +169,7 @@ __第三段__ （两句）总结+建议或预测
 
 ### <font size=4em color='#9ed048'>动态图:</font> 
 
-#### <font size=3px color='#8d4bbb'>柱状图</font>
+ <font size=3px color='#8d4bbb'>柱状图</font>
 
  __起头：__
 
@@ -207,13 +207,13 @@ __末段__ :
 
 > Basing on the analysis above,we may safely conclude that seeking additional income and eagerness for social experience are two principle driving forces for college students' participating in part-time jobs.From my perspective,these fledging adults deserve more respect and encouragement on this issue so long as they can keep academic life and working in balance.
 
-#### <font size=4em color='#9ed048'>静态图:</font> 
+### <font size=4em color='#9ed048'>静态图:</font> 
 
-### <font size=3px color='#8d4bbb'>柱状图</font>                                                                                                                                                                                                                                                                   
+ <font size=3px color='#8d4bbb'>柱状图</font>                                                                                                                                                                                                                                                                   
 
 ## 🧆模板
 
-#### A节
+### A节
 
  <font  size=3px color='#8d4bbb'>建议信 </font>
 
@@ -236,7 +236,7 @@ __末段__ :
 >           	                                                                  															          Your's sincerely,	
 > 																				   																			  	  Li Ming
 
-#### B节
+### B节
 
  <font size=4em color='#9ed048'>静态图:</font> 
 

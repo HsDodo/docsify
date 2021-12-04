@@ -4,6 +4,7 @@
 
 
 
+
 ---
 
 
@@ -76,41 +77,60 @@ bool Delete_Min(SqList &L ,ElemType &value)
 
 3.  __【2010 年统考】设将 n(n>1)个整数存放在一维数组 R 中。试着设计一个在时间复杂度和空间复杂度都尽可能高效的算法，将 R 中保存的序列循环左移 p__
 
-   __（0<p<n) 个 位 置 ， 即 将 R 中 的 数 据 由 （ x0,x1, … ,xn-1 ） 变 换 为 （ xp, xp+1,…,xn-1,x0,x1,…,xp-1）。要求：__
+    __（0<p<n) 个 位 置 ， 即 将 R 中 的 数 据 由 （ x0,x1, … ,xn-1 ） 变 换 为 （ xp, xp+1,…,xn-1,x0,x1,…,xp-1）。要求：__
 
-   （1）给出算法的基本设计思想； 
+    （1）给出算法的基本设计思想； 
 
-   （2）根据算法设计思想，采用 C 或 C++语言描述，关键之处给出注释 
+    （2）根据算法设计思想，采用 C 或 C++语言描述，关键之处给出注释 
 
-   （3）说明你所设计算法的时间复杂度和空间复杂度。
+    （3）说明你所设计算法的时间复杂度和空间复杂度。
 
-   ```c++
-   void Reverse(int R[], int left, int right)
-   { 
-        //将数组原地逆置
-        i = left, j = right;
-        while(i < j)
-        {
-            int tmp = r[i];
-            r[i] = r[j];
-            r[j] = tmp;
-            i++; //i 右移动一个位置
-            j--; //j 左移一个位置
-        }
-   }
-   void LeftShift(int R[], int n, int p)
-   { //将长度为 n 的数组 R 中的数据循环左移 p 个位置
-        if(p>0 && p<n)
-           if(L.data[i] < value) 
-            {
-                Reverse(r,0,n-1); //将数组全部逆置
-                Reverse(r,0,n-p-1); //将前 n-p 个数据逆置
-                Reverse(r,n-p,n-1); //将后 p 个数据逆置
-            }
-   }
-   ```
+    ```c++
+    void Reverse(int R[], int left, int right)
+    { 
+         //将数组原地逆置
+         i = left, j = right;
+         while(i < j)
+         {
+             int tmp = r[i];
+             r[i] = r[j];
+             r[j] = tmp;
+             i++; //i 右移动一个位置
+             j--; //j 左移一个位置
+         }
+    }
+    void LeftShift(int R[], int n, int p)
+    { //将长度为 n 的数组 R 中的数据循环左移 p 个位置
+         if(p>0 && p<n)
+            if(L.data[i] < value) 
+             {
+                 Reverse(r,0,n-1); //将数组全部逆置
+                 Reverse(r,0,n-p-1); //将前 n-p 个数据逆置
+                 Reverse(r,n-p,n-1); //将后 p 个数据逆置
+             }
+    }
+    ```
 
-   还有一种方法是开数组来辅助 leetcode有原题
+    还有一种方法是开数组来辅助 leetcode有原题
+
+4.  __逆转顺序表中的所有元素 算法思想：第一个元素和最后一个元素对调，第二个元素和倒数第二个元素对调，……，依此类推。__
+
+```c++
+void Reverse(int A[], int n) 
+{ 
+     int i, t; 
+     for (i=0; i < n/2; i++) 
+     { 
+         t = A[i]; 
+         A[i] = A[n-i-1]; 
+         A[n-i-1] = t; 
+     } 
+} 
+```
+
+
+
+
 
 ### <font size=4em color='#9ed048'>链表:</font> 
 
@@ -469,6 +489,76 @@ int hasCycle(ListNode *head)
 }
 ```
 
+13.  __删除线性链表中数据域为 item 的所有结点 算法思想：先从链表的第 2 个结点开始，从前往后依次判断链表中的所有结点是否满足条件，若某个 结点的数据域为 item，则删除该结点。最后再回过头来判断链表中的第 1 个结点是否满足条件，若 满足则将其删除。__
+
+```c++
+满足则将其删除。
+void PurgeItem(LinkList &list) 
+{ 
+     LinkList p, q = list; 
+     p = list->next; 
+     while (p != NULL) 
+     { 
+         if (p->data == item) { 
+             q->next = p->next; 
+             free(p); 
+             p = q->next; 
+         } else { 
+             q = p; 
+             p = p->next; 
+         } 
+     } 
+     if (list->data == item) 
+     { 
+         q = list; 
+         list = list->next; 
+         free(q); 
+     } 
+} 
+```
+
+14. __逆转线性链表__
+
+可以用个dummy节点
+
+```c++
+void Reverse(LinkList &list) 
+{ 
+     LinkList p, q, r; 
+     p = list; 
+     q = NULL; 
+     while (p != NULL) 
+     { 
+         r = q; 
+         q = p; 
+         p = p->next; 
+         q->next = r; 
+     } 
+     list = q; 
+} 
+```
+
+15. __制线性链表（递归）__
+
+```c++
+LinkList Copy(LinkList lista) 
+{ 
+     LinkList listb; 
+     if (lista == NULL) 
+         return NULL; 
+     else { 
+         listb = (LinkList)malloc(sizeof(LNode)); 
+         listb->data = lista->data; 
+         listb->next = Copy(lista->next); 
+         return listb; 
+     } 
+} 
+```
+
+
+
+
+
 
 
 ## 🍤__栈和队列__
@@ -701,6 +791,82 @@ void PostOrder(TreeNode* root){
 
 
 
+__建立二叉树（从键盘输入数据，先序遍历递归算法）__
+
+```c++
+BTree CreateBT() 
+{ 
+     char ch; 
+     BTree T; 
+     sacnf("%c", &ch); 
+     if (ch == ' ') 
+         return NULL; 
+     else { 
+         T = (BTree)malloc(sizeof(BTNode)); 
+         T->data = ch; 
+         T->lchild = CreateBT(); 
+         T->rchild = CreateBT(); 
+         return T; 
+     } 
+} 
+```
+
+__建立二叉树（从数组获取数据）__
+
+```c++
+BTree CreateBT(int A[], int i, int n) 
+{    //A是下标从1开始存数据的
+     BTree p; 
+     if (i > n) 
+         return NULL; 
+     else { 
+         p = (BTree)malloc(sizeof(BTNode)); 
+         p->data = A[i]; 
+         p->lchild = CreateBT(A, 2*i, n); //完全二叉树的性质， i的左孩子下标是2*i 右孩子下标是 2*i+1
+         p->rchild = CreateBT(A, 2*i+1, n); 
+         return p; 
+     } 
+} 
+T = CreateBT(A, 1, n); 
+-------------------------------------------------------- 
+BTree CreateBT(int A[], int n) 
+{ 
+     int i; 
+     BTree *pT; 
+     // 对应 n 个结点申请可容纳 n 个指针变量的内存空间
+     pT = (BTree *)malloc(sizeof(BTree)*n); 
+     // 若数组中的某个元素不等于零，则申请相应的结点空间并进行赋值
+     for (i=1; i <= n; i++) 
+     { 
+         if (A[i] != 0) { 
+             pT[i] = (BTree)malloc(sizeof(BTNode)); 
+             pT[i]->data = A[i]; 
+         } else { 
+             pT[i] = NULL; 
+         } 
+     } 
+     // 修改结点的指针域的内容，使父结点指向左、右孩子结点
+     for (i=1; i <= n; i++) 
+     { 
+         if (pT[i] != NULL) 
+         { 
+             pT[i]->lchild = pT[2*i]; 
+             pT[i]->rchild = pT[2*i+1]; 
+         } 
+     } 
+} 
+```
+
+
+
+
+
+
+
+
+
+
+
 1. __从根节点到某个节点的路径__ （用后序遍历写）
 
    ```c++
@@ -739,24 +905,24 @@ void PostOrder(TreeNode* root){
 
 2.  __二叉树的层序遍历算法__ （跟BFS类似）
 
-   ```c++
-   void LevelOrder(BiTree root)
-   {
-       InitQueue(Q); //初始化辅助队列
-       BiTree p; 
-       EnQueue(Q,root); //将根结点入队
-       while(!IsEmpty(Q)) //队列循环不为空
-       {
-           DeQueue(Q,p); //队头元素出队
-           visit(p); //访问当前 p 所指向结点
-           if(p->lchild != NULL)
-           	EnQueue(Q,p->lchild); //左子树不为空，左子树入队
-           if(p->rchild != NULL)
-           	EnQueue(Q,p->rchild); //右子树不为空，右子树入队
-       } 
-   }
-   
-   ```
+    ```c++
+    void LevelOrder(BiTree root)
+    {
+        InitQueue(Q); //初始化辅助队列
+        BiTree p; 
+        EnQueue(Q,root); //将根结点入队
+        while(!IsEmpty(Q)) //队列循环不为空
+        {
+            DeQueue(Q,p); //队头元素出队
+            visit(p); //访问当前 p 所指向结点
+            if(p->lchild != NULL)
+            	EnQueue(Q,p->lchild); //左子树不为空，左子树入队
+            if(p->rchild != NULL)
+            	EnQueue(Q,p->rchild); //右子树不为空，右子树入队
+        } 
+    }
+    
+    ```
 
 3. __试编写二叉树的自下而上、从右到左的层次遍历算法。__
 
@@ -1051,7 +1217,7 @@ int WPL_PreOrder(BiTree root, int deep)
 
 16. __【2017 年统考真题】设计一个算法，将给定的表达式树（二叉树）转换为等价的中缀表达式（通过括号反映操作符的计算次序）并输出。例如，当下列的两 棵表达式树作为算法的输入时：__
 
-![16年真题](Image\16年真题.png)
+![16年真题](C:/Users/asus/Desktop/考研/Image/16年真题.png)
 
 __输出等价的中缀表达式分别为（a+b）* （c * （ -d））和（a*b）+（-（c-d））__
 
@@ -1077,15 +1243,588 @@ void BtreeToExp(BTree *root, int deep)
 } 
 ```
 
+17. __求二叉树的深度（递归算法）__
+
+```c++
+7. 求二叉树的深度（递归算法）
+int Depth(BTree T) 
+{ 
+     int ldepth, rdepth; 
+     if (T == NULL) 
+         return 0; 
+     else { 
+         ldepth = Depth(T->lchild); 
+         rdepth = Depth(T->rchild); 
+         if (ldepth > rdepth) 
+             return ldepth+1; 
+         else 
+             return rdepth+1; 
+     } 
+} 
+```
+
+18. __求二叉树的深度（非递归算法）__
+
+【算法思想】
+
+对二叉树进行遍历，遍历过程中依次记录各个结点所处的层次数以及当前已经访问过的 结点所处的最大层次数。每当访问到某个叶子结点时，将该叶子结点所处的层次数与最大层次数进 行比较，若前者大于后者，则修改最大层次数为该叶子结点的层次数，否则不作修改。遍历结束时， 所记录的最大层次数即为该二叉树的深度。本算法使用的是非递归的中序遍历算法（其它遍历顺序 也可以）。
+
+```c++
+#define MAX_STACK 50 
+int Depth(BTree root) 
+{ 
+    // BTree STACK1[MAX_STACK], p = root; 
+    // int STACK2[MAX_STACK]; 
+     BTree p = root;
+     Stack<int> stk2;
+     Stack<BTree> stk1;
+     int curdepth, maxdepth = 0, top = -1; 
+     if (root != NULL) 
+     { 
+         curdepth = 1; 
+         while (p != NULL || !stk1.empty()) 
+         { 
+             while (p != NULL) 
+             { 
+                 stk1.push(p);
+                 stk2.push(curdepth);
+                 p = p->lchild; 
+                 curdepth++; 
+             } 
+             p = stk1.top(); 
+             curdepth = stk2.top();
+             stk1.pop();stk2.pop();
+             if (p->lchild == NULL && p->rchild == NULL) 
+                 if (curdepth > maxdepth) 
+                     maxdepth = curdepth; 
+             p = p->rchild; 
+             curdepth++; 
+         } 
+     } 
+     return maxdepth; 
+} 
+```
+
+19. __交换二叉树中所有结点的左右子树的位置__
+
+```c++
+void ExchangeBT(BTree root) 
+{ 
+	if(root==null) return;
+    ExchangeBT(root.lchild);
+    ExchangeBT(root.rchild);
+    BTree tmep = root.lchild;
+    root.lchild=root.rchild;
+    root.child=temp;   
+    
+} 
+```
+
+
+
+
+
 
 
 ## 🍯图
 
+__引言__：图算法设计有一定的难度，要提高这块的设计能力，要掌握如下基本结构:
+
+__①图的两种存储结构。图算法都是基于某种存储结构的，如果连存储结构都含糊不清楚，肯 定是设计不出来的，因此务必去备注图的邻接矩阵和邻接表的存储结构__ 
+
+__②图的两种遍历算法。图的算法基本都是基于图的遍历算法（正如二叉树的算法是基于二叉 树的 3 种基本遍历算一样）。一般涉及不带权图的最短或最长路径时可以考虑采用广度优 先遍历算法；而涉及到查找所有简单路径时可考虑采用深度优先遍历算法。__
+
+
+
+ <font size=4em color='#9ed048'>Floyd算法:</font> （可以得到任意两点的最短路径）
+
+Floyd算法比较简单，在算最短路径的时候写就完事了,时间复杂度 O(n^2^)
+
+```c++
+#include <iostream>
+#include<bits/stdc++.h>
+#define MaxVnum 100 //顶点最大个数
+typedef char VexType; //顶点的数据类型，根据需要定义
+typedef int EdgeType; //边上的权值的数据类型，若不带权值的图，则为0或1
+typedef struct{
+    VexType Vex[MaxVnum];
+    EdgeType Edge[MaxVnum][MaxVnum];
+    int vexnum,edgenum;
+}AMGragh;
+int dist[MaxVnum][MaxVnum];
+int pre[MaxVnum][MaxVnum];
+
+void Floyd(AMGragh G){
+    for(int i=0;i<G.vexnum;i++){
+        for(int j=0;j<G.vexnum;j++){
+            dist[i][j] = G.Edge[i][j];
+            if(dist[i][j]!=INF&&i!=j){//如果两不同节点有边
+                pre[i][j]=i;//设置前驱
+            }else{
+                pre[i][j]=-1;
+            }
+        }
+    } //
+
+    for(int k=0;k<G.vexnum;k++){
+        for(int i=0;i<G.vexnum;i++){
+            for(int j=0;j<G.vexnum;j++){
+                if(dist[i][j]>dist[i][k]+dist[k][j]){ //插入个顶点看是否能松弛
+                    dist[i][j]=dist[i][k]+dist[k][j];
+                    pre[i][j]=pre[k][j];
+                }
+            }
+        }
+    }
+}
+```
+
+
+
+ <font size=4em color='#9ed048'>Dijkstra算法: </font> （用来解决单源最短路径问题）
+
+不能解决带有负权值的图的单源最短路径
+
+```c++
+#include <iostream>
+#include<bits/stdc++.h>
+#define MaxVnum 100 //顶点最大个数
+typedef char VexType; //顶点的数据类型，根据需要定义
+typedef int EdgeType; //边上的权值的数据类型，若不带权值的图，则为0或1
+typedef struct{
+    VexType Vex[MaxVnum];
+    EdgeType Edge[MaxVnum][MaxVnum];
+    int vexnum,edgenum;
+}AMGragh;
+int dist[MaxVnum];
+int p[MaxVnum];
+bool flag[MaxVnum];
+
+void dijkstra(AMGragh G,int u){
+    for(int i=0;i<G.vexnum;i++){ //初始化
+        dist[i] = G.Edge[u][i];
+        flag[i]=false;
+        if(dist[i]==INF){
+            p[i]=-1; //源点到i节点没直接路径,前驱设为-1
+        }else{
+            p[i]=u;
+        }
+        for(int i=0;i<G.vexnum;i++){
+            int temp=INF,t=u;
+            for(int j=0;j<G.vexnum;j++){
+                if(!flag[j]&&dist[j]<temp){
+                    t=j;
+                    temp=dist[j];
+                }
+            }
+        }
+        if(t==u) return ;
+        flag[t]=true;
+        for(int i=0;i<G.vexnum;i++){
+            if(!flag[i]&&G.Edge[t][j]<INF){
+                if(dist[i]>dist[t]+G.Edge[t][i]){
+                    dist[i]=dist[t]+G.Edge[t][i];
+                    p[i]=t;
+                }
+            }
+
+        }
+    }
+}
+```
 
 
 
 
 
+
+
+
+
+
+
+
+
+1. __设计一个算法，判断一个无向图 G 是否为一棵数。若是一棵树，则算法返回 true，否则返回 false.__
+
+__【算法思想】__
+
+一个无向图 G 是一棵数的条件，G 必须是无回路的连通图或有 n-1 条边的连通图。 这里采用后者作为判断条件。采用深度优先遍历算法在遍历图的过程中统计可能 访问到的顶点个数和边的个数，若一次遍历就能访问到 n 个顶点和 n-1 条边，则 可断定，此图是一课数，算法如下：
+
+```c++
+bool isTree(Graph &G)
+{
+    for(i = 0; i<G.vexnum; i++)
+    	visited[i] = FALSE; //访问标记数组初始化
+    int Vnum = 0, Enum = 0; //初试化顶点数和边数
+    DFS(G,1,Vnum,Enum,visited);
+    if(Vnum == G.vexnum && Enum == (G.vexnum-1)) 
+    	return true; //符合树的条件
+    else
+    	return false; 
+}
+void DFS(Graph &G, int v, int &Vnum, int &Enum, int visited[])
+{
+    //深度优先遍历
+    visited[v] = TRUE; Vnum++; //做标记访问，顶点计数
+    int w = FirstNeighbor(G,v);
+    while(w!=-1)
+    {
+        if(!visited[w]){
+            Enum++; //如果邻接顶点没访问过，则边加一
+            DFS(G,w,Vnum,Enum,visited);    
+        }
+        w = NextNeighbor(G,v,w);
+    } 
+} 
+```
+
+
+
+2. __写出图的深度优先搜索 DFS 的非递归算法（图采用邻接表存储形式）。__
+
+【算法思想】 
+
+在深度优先遍历的非递归算法中适用一个栈来记忆下一步将要访问的顶点，同时 适用了一个访问标记数组 visited[i]来记忆第 i 个顶点是否在栈内。
+
+```c++
+void DFS_NonRC(Graph &G, int v)
+{
+    //从顶点开始进行深度优先搜索
+    int w;
+    InitStack(S);
+    for(i = 0; i<G.vexnum; i++)
+    	visited[i] = FALSE; //初始化 visited 
+    Push(S,v);
+    visited[v] = TRUE; //将 v 入栈并置为 true 
+    while(!IsEmpty(S))
+    {
+        k = Pop(S); //栈中退出一个顶点
+        visit(k); //先访问，再将其子结点入栈
+        for(w = FirstNeighbor(G,k) ; w>=0; w = NextNeighbor(G,k,w))
+        { //k 的所有邻接点
+            if(!visited[w]) //未进过栈的顶点进栈
+            {
+                Push(S,w);
+                visited[w] = true; //标志
+            }//if 
+        }//for
+    } //while
+}
+
+```
+
+3.  __分别采用基于深度优先遍历和广度优先遍历算法判别以邻接表方式存储的 有向图 中是否存在有顶点 Vi 到顶点 Vj 的路径（i≠j）。__
+
+【算法思想】
+
+ 两个不同的遍历算法都采用从顶点 Vi 出发，依次遍历图中的每个顶点，直到搜索到顶点 Vj，若能够搜索到 Vj，则说明存在顶点 Vi 到顶点 Vj 的路径。
+
+```c++
+bool visited[MaxSize] = false; //访问标记数组
+int Exit_Path_DFS(ALGraph G, int i, int j)
+{
+    int p; //顶点序号
+    //深度优先遍历判断有向图 G 中顶点 Vi 到 Vj 是否有路径，是则返回 1，否则返回 0
+    if(i == j)
+    	return 1; //i 就是 j 的时候
+    else
+    {
+        visited[i] = 1; //置访问标记
+        for(p = FirstNeighbor(G,i); p>=0; p = NextNeighbor(G,i,p))
+        {
+//            k = p->adjvex; 
+            if(!visited[p] && Exist_Path_DFS(G,p,j))
+                return 1;
+        } 
+    } 
+    return 0;
+} 
+```
+
+
+
+4. __设计一个算法，求不带权无向连通图 G 中距离顶点 v 最远的一个顶点（所谓 最远就是到大 v 的路径长度最大）__
+
+【算法思想】
+
+基于图的广度优先搜索遍历方式，其体现了图中由某个顶点开始，以近向远扩展 的方式遍历图中结点的过程。因此广度优先搜索遍历过程的最后一个顶点一定是 距离给定顶点最远的顶点。因此只需要把广度优先遍历搜索的代码背下，稍加修 改，返回最后一个顶点即可。
+
+```c++
+#define MaxVnum 100 //顶点最大个数
+typedef char VexType; //顶点的数据类型，根据需要定义
+typedef int EdgeType; //边上的权值的数据类型，若不带权值的图，则为0或1
+typedef struct AdjNode{
+    int index; //邻接点下标
+    struct AdjNode *next; //邻接点的下一个邻接点
+}AdjNode;
+
+typedef struct VexNode{
+    VexType data; //顶点数据类型
+    AdjNode *first; //指向第一个邻接点
+}VexNode;
+
+typedef struct{
+    VexNode Vex[MaxVnum];
+    int vexnum,edgenum;
+}ALGragh;
+
+
+int maxdist (AGraph *G, int v)
+{ 
+    AdjNode *p;
+	Queue Q;
+    int visited[MAXV],i,j,k;
+    k = v;
+    for(i=0;i<G->n;i++) //初始化访问标志数组
+        visited[i]=0;
+    visited[v]=1; //标记 v 已访问
+	Init(Q);
+    Q.push(v);
+    while (!isEmpty(Q))
+    { 
+		k = Q.front(); 
+        Q.pop();
+        p=G->Vex[k].first; //找第 1 个邻接点
+        while (p!=NULL) //所有未访问过的邻接点进队
+        { 
+            j=p->index; //获取邻接顶点下标
+            if (visited[j]==0) //若 j 未访问过
+            { 
+                visited[j]=1; //将顶点 j 进队
+                Q.push(j);
+            }
+            p=p->next; //找下一个邻接点
+        }
+    }
+    return k; //k是最后一个访问的节点的下标
+}
+
+```
+
+
+
+5. __假设图采用邻接表存储，分别写出基于 DFS 和 BPS 遍历的算法来判别顶点 i 和顶点 j (i≠j）之间是否有路径。__
+
+【算法思想】
+
+ 先置全局数组 visited[]所有元素为 0，然后从顶点 i 开始进行某种遍历，遍历 结束之后，若 visited[j]=0，说明顶点 i 与顶点 j 之间没有路径;否则说明它们 之间存在路径。
+
+```c++
+//基于 DFS 遍历的算法如下：
+int visited[Maxnum];
+int DFSTrave(ALGraph *G, int i,int j)
+{ 
+    int k;
+    for (k=0;k<G->vexnum;k++)
+        visited[k]=0;
+    DFS(G,i); //从顶点 i 开始进行深度优先遍历
+    if(visited[j]==0)
+        return 0;
+    else
+        return 1;
+}
+
+void DFS(ALGragh *G,int i){
+    visited[i]=true;
+	int p;
+    for(p=firstNeighbor(G,i);p>=0;p=nextNeighbor(G,i,p)){
+		if(visited[p]==0){
+            visited[p]=1;
+            DFS(G,p);
+        }       
+    }
+}
+
+//基于 BFS 遍历的算法如下：
+int BFSTrave(ALGraph *G,int i, int j)
+{ 
+    int k;
+    for ( k=0;k<G->n;k++)
+        visited[k]=0;
+    BFS(G,i); //从顶点 i 开始进行广度优先遍历
+    if (visited[j]==0)
+        return 0;
+    else
+        return 1;
+
+}
+
+void BFS(ALGragh *G,int i){
+    Queue Q;
+    Init(Q);
+    Q.push(i);
+    while(!isEmpty(Q)){
+        int k = Q.front();
+        int p;
+        Q.pop();
+        for(p=firstNeighbor(G,k);p>=0;p=nextNeighbor(G,k,p)){
+            if(visited[p]==0){
+                visited[p]=1;
+                Q.push(p);
+            }
+        }
+    }
+}
+
+```
+
+
+
+6. __假设图 G 采用邻接表存储，设计一个算法，判断无向图 G 是否连通。若连通 则返回 1;否则返回 0。__
+
+【算法思想】:
+
+采用遍历方式判断无向图 G 是否连通。若用深度优先遍历方法，先给 visited[] 数组置初值 0，然后从 0 顶点开始遍历该图。在一次遍历之后，若所有顶点 i 的 visited[i]均为 1，则该图是连通的;否则不连通。对应的算法如下。 跟上面那题类似
+
+```c++
+int visited[Maxnum];
+void DFS(ALGragh *G,int i){
+    visited[i]=true;
+	int p;
+    for(p=firstNeighbor(G,i);p>=0;p=nextNeighbor(G,i,p)){
+		if(visited[p]==0){
+            visited[p]=1;
+            DFS(G,p);
+        }       
+    }
+}
+
+int Connect (ALGraph *G) //判断无向图 G 的连通性
+{ 
+    int i,flag=1;
+    for (i=0;i<G->n;i++)
+        visited[i]=0;
+    DFS(G,0); //调用 DFS 算法
+    for (i=0;i<G->n;i++)
+        if (visited[i]==0)
+        { 
+            flag=0;
+            break;
+        }
+    return flag;
+}
+```
+
+7. __假设图 G 采用邻接表存储，设计一个算法，判断图 G 中从顶点 u 到 v 是否存 在简单路径。__
+
+【算法思想】 DFS深搜遍历路径
+
+```c++
+#define MaxVnum 100 //顶点最大个数
+typedef char VexType; //顶点的数据类型，根据需要定义
+typedef int EdgeType; //边上的权值的数据类型，若不带权值的图，则为0或1
+typedef struct AdjNode{
+    int index; //邻接点下标
+    struct AdjNode *next; //邻接点的下一个邻接点
+}AdjNode;
+
+typedef struct VexNode{
+    VexType data; //顶点数据类型
+    AdjNode *first; //指向第一个邻接点
+}VexNode;
+
+typedef struct{
+    VexNode Vex[MaxVnum];
+    int vexnum,edgenum;
+}ALGragh;
+
+
+void ExistPath (AGraph *G,int u,int v,int &has)
+{ //has 表示 u 到 v 是否有路径,初值为 0
+    int w;
+    ArcNode *p;
+    visited[u]=1; //置已访问标记
+    if (u==v) //找到了一条路径
+    { 
+        has=1;
+        return;
+    }
+    p=G->Vex[u].first; //p 指向顶点 u 的第一个相邻点
+    while (p!=NULL)
+    { 
+        w=p->index; //w 为顶点 u 的相邻顶点 
+        if(visited[w] ==0) //若 w 顶点未访问，递归访问它
+            ExistPath(G, w, v, has);
+        p=p->next; //P 指向顶点 v 的下一个相邻点
+    }
+}
+
+```
+
+8. __假设图 G 采用邻接表存储，设计一个算法，输出图 G 中从顶点 u 到 v 的所有简单路径。__
+
+```c++
+void FindPath(AGraph *G,int u,int v,int path[],int d)
+//d 是到当前为止已走过的路径长度,调用时初值为-1
+{ 
+    int w,i;
+    AdjNode *p;
+    d++; //路径长度增 1
+    path[d] =u; //将当前顶点添加到路径中
+    visited[u] =1; //置已访问标记
+    if (u == v) //找到一条路径则输出
+        printf("%2d" , path[i]); //输出路径
+    p=G->Vex[u].first; //p 指向 v 的第一个相邻点
+    while (p!=NULL)
+    { 
+        w=p->next->v; //w 为顶点 p 的相邻顶点
+        if(visited[w]==0) //若 w 顶点未访问,递归访问它
+            FindPath(G, w,v , path, d);
+        p=p->next; //p 指向 v 的下一个相邻点
+    }
+    visited[u]=0; //恢复环境,使该顶点可重新使用
+}
+
+```
+
+9. __假设图 G 采用邻接表存储，设计一个算法，判断无向图 G 中任意两点之间是 否存在一条长度为 k 的简单路径__
+
+【算法思想】 
+
+可以利用深度优先搜索的算法递归遍历邻接表来进行判断。设置 visited[]为标记 访问数组，已经访问的顶点记为 true。该算法每递归调用一次，长度 k-1，递归 结束的条件为首尾顶点相遇且 k==0，此时表面两个顶点之间存在一条长度为 k 的简单路径，返回 1。如果递归结束的条件不成立，则从 vi 的边链表的第一个边 界点开始，获取 vi 的邻接点，对 vi 的尚未访问的邻接点递归调用，长度 k-1。如 果最后递归结束的条件不成立且无法继续递归下去，并不两点之间不存在长度 k 的简单路径，返回 0。
+
+```c++
+#define MaxVnum 100 //顶点最大个数
+typedef char VexType; //顶点的数据类型，根据需要定义
+typedef int EdgeType; //边上的权值的数据类型，若不带权值的图，则为0或1
+typedef struct AdjNode{
+    int index; //邻接点下标
+    struct AdjNode *next; //邻接点的下一个邻接点
+}AdjNode;
+
+typedef struct VexNode{
+    VexType data; //顶点数据类型
+    AdjNode *first; //指向第一个邻接点
+}VexNode;
+
+typedef struct{
+    VexNode Vex[MaxVnum];
+    int vexnum,edgenum;
+}ALGragh;
+
+
+int visited[MaxSize];
+bool PathLenK(ALGraph G, int i, int j, int k)
+{
+    if(i == j && k == 0) //找到一条路径符合要求
+    	return true;
+    else if(k > 0)
+    {
+        visited[i] = true; //防止出现环,导致死循环
+        for(p = G.Vex[i].first; p; p = p->next) //next 表示 i的相对于p的下一个邻接点
+        {
+            //从结点 i 开始遍历，p 为 i 的边链表的第一个边结点
+            v = p->index; //v表示p的下标
+            if(!visited[v]) //v 未被访问
+                if(PahtLenK(G,v,j,k-1)) 
+                    return true; 
+        }
+        visited[i] = false; //允许曾经被访问过的结点出现在另外一条路径上 
+    }
+    return false;
+} 
+```
 
 
 
@@ -1127,25 +1866,339 @@ void KMP(char *s,char *p){
 
 
 
-## 🎃排序
+## 🎃查找和排序
 
- <font size=4em color='#9ed048'>堆排序:</font> 
+1. __折半查找非递归算法（二分查找）__
+
+```c++
+int Binary_Search(SqList L, ElemType key)
+{
+     //在有序表 L 中查找关键字为 Key 的元素，若存在则返回其他位置，不存在则返回-1
+     int left = 0, right = L.length-1, mid;
+     while(left <= right) //闭区间[0,len-1] 出循环条件 [high,low]
+     {
+         mid = (left + right)/2; //取中间位置
+         if(L.elem[mid] == key)
+             return mid; //查找成功返回所在位置
+         else if(L.elem[mid] > key)
+             right = mid-1; //从前半部分继续查找
+         else
+             left = mid+1; //从后半部分继续查找
+     }
+     return -1;
+}
+
+```
+
+2. __折半查找递归算法__
+
+```c++
+int BinSearch_Cur(SqList L, KeyType key, int low, int high)
+{
+     if(low > high)
+     return 0; //查找不到时返回 0；
+     if(low <= high)
+     {
+         mid = (low+high)/2;
+         if(L.elem[mid] == key)
+             return mid;
+         else if(key < L.elem[mid])
+             return BinSearch_Cur(L, key, low, mid-1); //对左子表递归查找
+         else
+             return BinSearch_Cur(L, key, mid+1, high); //对右子表递归查找
+     }
+}
+
+```
+
+3. __试着写一个算法判断二叉树是否为二叉排序树的算法__
+
+【算法思想】
+
+根据二叉排序树的定义，对二叉树进行递归遍历，左子树关键字比根结点关键字 小，右子树的关键字比根结点的关键字大，一旦有不满足条件则可判断不是二叉 排序树。 通过参数 flag 的值来判断，flag 为 1 表示是二叉排序树，为 0 则表示非二叉排序 树，flag 初值为 1。设定全局变量 pre(初始值为 NULL)来指向遍历过程结点的前 驱。
+
+用中序遍历来判断
+
+```c++
+void JudgeBST(BiTree root, int &flag)
+{
+    //判断二叉树是否为二叉排序树
+    if(root != NULL && flag)
+    {
+        JudgeBST(T->lchild, flag); //中序遍历左子树
+        if(pre == NULL) //中序遍历的第一个结点不必判断
+            pre = root; 
+        else if(pre->data < root->data) //判断当前节点的前驱节点的值 是否 < 当前节点的值 ,因为二叉排序树的中序遍历是递增的(一般是递增的)
+            pre = root; //前驱指针指向当前结点
+        else flag = 0; //不是二叉排序树
+        JudgeBST(T->rchild, flag); //中序遍历右子树
+    } 
+}
+```
+
+
+
+> 记住二叉树中序遍历模板 其他两个类似
+>
+> travel( root.left );
+>
+> ​		做操作
+>
+> travel( root.right );
+
+
+
+4.  __快速排序算法__
+
+```c++
+int Partition(SqList &L, int low, int high)
+{
+    //L.r[0] = L.r[low]; 
+    int temp = L.r[low];//用子表的第一个记录作为枢纽记录
+    pivotkey = L.r[low].key; //枢纽记录关键字
+    while(low < high)
+    {
+        while(low < high && L.r[high].key >= pivotkey)
+        	--high; //右边走到第一个小于 pivotkey 的地方
+        L.r[low] = L.r[high]; //将比枢纽记录小的移动到低端
+        while(low < high && L.r[low].key <= pivotkey)
+            ++low;  //左边找第一个大于 pivotkey 的地方
+        L.r[high] = L.r[low]; //将比枢纽记录大的移动到高端
+    }
+//    L.r[low] = L.r[0]; 
+  	L.r[low] = temp;
+    return low; //返回枢纽位置
+}
+
+void QSort(SqList &L, int low, int high)
+{
+    if(low < high)
+    {
+        pivotloc = Partition(L, low, high); //第一步先分左右 ，左边全是小于pivot的值，右边全是大于pivot的值
+        QSort(L,low,pivotloc-1);
+        QSort(L,pivotloc+1, high);
+    }
+} 
+```
+
+<font size=4em color='8d4bbb'>点评：</font>在各种内部排序中，快速排序可谓是相当经典的排序算法，因此，快速 排序算法是大家必须中重点掌握了理解的。下面给大家挑选了两道都是采用快 速排序算法进行解答的题目
+
+__例题【快排的应用】：编写算法，对 n 个关键字取整数值的记录序列进行整理， 以使得所有关键字为负值的关键字排列在关键字为非负值的记录之前，__
+
+要求： 
+
+（1）采用顺序存储结构，至多使用一个记录的辅助存储空间 
+
+（2）算法的时间复杂度为 O(n)
+
+【算法思想】 
+
+此题目借助快速排序中子表划分的算法思想对表中的数据进行划分。附设两个指 针 low 和 high，初始时分别指向表的上界和下界。
+
+```c++
+void process(int a[], int n)
+{
+    int low = 0, high = n-1;
+    while(low < high)
+    {
+        while(low < high && a[low] < 0)
+         	++low;
+        while(low < high && a[high] > 0)
+        	--high;
+        if(low < high)
+        {
+            int tmp = a[low];
+            a[low] = a[high]; //交换
+            a[high] = tmp;
+            low++;
+            high--;
+     	}
+    }
+}
+
+```
+
+
+
+__【变式例题】设有一组初始记录关键字序列（K1，K2，…，Kn），要求设计一个算法能够在 O(n)的时间复杂度内将线性表划分成两部分，其中左半部分的每 个关键字均小于 Ki，右半部分的每个关键字均大于等于 Ki。__
+
+```c++
+void process(int a[], int n, int w)
+{
+    int low = 0, high = n-1, x = k[w];
+    while(low < high)
+    {
+        while(low < high && a[low] < x)
+             ++low;
+        while(low < high && a[high] > x)
+             --high;
+        if(low < high)
+         {
+            int tmp = a[low]; 
+            a[low] = a[high]; //进行交换
+            a[high] = tmp;
+            low++;
+            high--;
+         }
+    }
+}
+
+```
+
+
+
+5. __线性表（a1,a2,a3,…,an）中元素递增有序且按照顺序存储于计算机内。__
+
+   要求设 计一个算法完成：
+
+   （1）用最少的时间在表中查找数值为 x 的元素。 // 注意递增有序，用二分查找 
+
+   （2）若查找到将其与后继元素位置交换。  
+
+   （3）若找不到将其插入表中并使表中元素仍然递增有序。 
+
+   【算法思想】 顺序存储的线性表递增有序，可以顺序查找，也可以折半查找。题目要求采用“最 少的时间在表中查找数值为 x 的元素”，应使用折半查找，算法如下：
+
+```c++
+void SearchExchageInsert(ElemType a[], ElemType x)
+{
+     int low = 0, high = n-1; //low 和 high 指向线性表下界和上界
+     while(low <= high) //注意是闭区间,[0,n-1] ，注意区间就能很好判断跳出循环的条件
+     {
+         mid = (low + high)/2;
+         if(a[mid] == x) //查找到 x，退出循环
+             break;
+         else if(a[mid] < x)
+             low = mid + 1;
+         else
+             high = mid - 1;
+     }
+     if(a[mid] == x && mid != n) //若最后一个元素与 x 相等，则不存在
+     { 
+         //将其与后继交换
+         int tmp = a[mid];
+         a[mid] = a[mid+1];
+         a[mid+1] = tmp;
+     }
+     if(low > high) // 查找失败，需要插入元素
+     {
+         for(i = n-1; i>high; i--)
+             a[i+1] = a[i]; //后移元素
+         a[i+1] = x; //插入 x
+     }
+}
+```
+
+ <font size=4em color='#9ed048'>插入排序算法:</font> 
+
+```c++
+void InsertSort(int A[], int n) 
+{ 
+     int i, j, temp; 
+     for (i=1; i <= n-1; i++) 
+     { 
+         if (A[i] < A[i-1]) 
+         { 
+             j = i-1; 
+             temp = A[i]; 
+             while (j >= 0 && temp < A[j]) 
+             { 
+                 A[j+1] = A[j]; 
+                 j--; 
+             } 
+             A[j+1] = temp; 
+         } 
+     } 
+} 
+```
+
+
+
+ <font size=4em color='#9ed048'>冒泡排序:</font> 
+
+ ```c++
+void BubbleSort(int A[], int n) 
+{ 
+     int i, j, temp, flag = 1; 
+     for (i=n-1; i >= 1 && flag == 1; i--) 
+     { 
+         flag = 0; 
+         for (j=0; j < i; j++) 
+         { 
+             if (A[j] > A[j+1]) 
+             { 
+                 temp = A[j]; 
+                 A[j] = A[j+1]; 
+                 A[j+1] = temp; 
+                 flag = 1; 
+             } 
+    	 } 
+     } 
+} 
+ ```
+
+ <font size=4em color='#9ed048'>选择排序:</font> 
+
+```c++
+void SelectSort(int A[], int n) 
+{ 
+     int i, j, min, temp; 
+     for (i=0; i < n; i++) 
+     { 
+         min = i; 
+         for (j=i+1; j < n; j++) 
+         { 
+             if (A[min] > A[j]) 
+                 min = j; 
+         } 
+         if (min != i) 
+         { 
+             temp = A[min]; 
+             A[min] = A[i]; 
+             A[i] = temp; 
+         } 
+     } 
+} 
+```
+
+ <font size=4em color='#9ed048'>堆排序算法:</font> 
+
+```c++
+void HeadAdjust(vector<int> A,int k,int len){
+    //将以k为根节点的树进行调整
+    A[0]=A[k];//暂存根节点
+    for(int i=2*k;i<=len;i*=2){ //乘2是找孩子节点
+        if(i<len&&A[i]<A[i+1]){
+            i++;   //移到更大的孩子上
+        }
+        if(A[0]>=A[i]){
+            break;
+        }else{
+            A[k]=A[i];
+            k=i;
+        }
+    }
+    A[k]=A[0];
+}
+
+void BuildMaxHeap(vector<int> A,int len){ //建立大根堆
+    for(int i=len/2;i>0;i--){
+        HeadAdjust(A,i,len);
+    }
+}
+
+void HeapSort(int A,int len){
+    BuildMaxHeap(A,len);
+    for(int i=len;i>1;i--){
+        Swap(A[i],A[1]);
+        HeadAdjust(A,1,i-1);  //从小到大排序用大根堆，建完堆后每次取堆顶元素与最后一个元素交换，再调整交换后的前面的元素
+    }
+}
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
 

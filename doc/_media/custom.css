@@ -1,0 +1,40 @@
+@import url("fonts.css");
+
+body {
+    font-family: 'Alimama','Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+	font-weight: 500;
+}
+
+.markdown-section pre {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.markdown-section h2 span{
+	color: #2bae85;
+}
+
+.markdown-section h3 span{
+	color: #fb9968;
+}
+
+.markdown-section h4 span{
+	color: #61ac85;
+}
+
+.markdown-section h5 span{
+	color: #5cb3cc;
+}
+
+img {
+    border-radius: 10px;
+}
+
+
+.markdown-section blockquote {
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	border-radius: 4px;
+	background-color: rgba(66, 185, 131, .1);
+}

@@ -614,7 +614,7 @@ Redis 选择使用跳表（Skip List）而不是 B+ 树作为其底层数据结�
 
 在Go语言中，提供了多种工具和支持来帮助开发者编写并发程序。Go语言本身的设计就非常注重并发编程的支持，这主要体现在它的`sync`包和内置的`channel`机制上。下面是一些常用的并发工具和概念：
 
-1. **goroutines** - goroutine是一个轻量级线程，由Go运行时调度。通过调用`runtime.Gooutine()`函数（通常通过`go`关键字启动一个函数或方法）可以创建一个新的goroutine。goroutines非常适合用于并发执行任务，尤其是I/O密集型的任务。
+1. **goroutines** - goroutine是一个轻量级线程，由Go运行时调度。通过调用`runtime.Goroutine()`函数（通常通过`go`关键字启动一个函数或方法）可以创建一个新的goroutine。goroutines非常适合用于并发执行任务，尤其是I/O密集型的任务。
 2. **channels** - channels是goroutines之间安全通信的一种方式。通过channels可以在不同的goroutines之间发送和接收数据。这是Go语言实现CSP（Communicating Sequential Processes）模型的核心。
 3. **sync包** - 包括`sync.Mutex`，`sync.RWMutex`，`sync.WaitGroup`等类型，用于同步goroutines的执行。例如，`Mutex`用于保护共享数据免受并发修改，而`WaitGroup`则用于等待一组并发操作完成。
 4. **context包** - `context`包提供了一个取消信号来传播有限期的生命周期到一个或者多个子goroutines。它可以帮助处理程序优雅地终止长时间运行的操作，比如HTTP请求处理中的数据库查询。
